@@ -1,95 +1,61 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Banner from "@/components/Banner/Banner";
+import CardList from "@/components/MovieList/CardList";
+import Header from "@/components/MovieList/Header";
+import axios from "axios";
+import { Suspense } from "react";
+import Loading from "./loading";
 
-export default function Home() {
+export default async function Home() {
+  const terpopuler = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/discover/movie`,
+    {
+      params: {
+        api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
+      },
+    }
+  );
+  const aksi = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/discover/movie`,
+    {
+      params: {
+        api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
+        with_genres: 28,
+      },
+    }
+  );
+  const kids = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/discover/movie`,
+    {
+      params: {
+        api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
+        with_genres: 16,
+      },
+    }
+  );
+
+  const movieTerpopuler = terpopuler.data.results;
+  const movieAksi = aksi.data.results;
+  const movieKids = kids.data.results;
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+    <main>
+      <Suspense fallback={<Loading />}>
+        <section>
+          <Banner movies={movieAksi} />
+        </section>
+        <section>
+          <Header title="Terpopuler" url="/" />
+          <CardList movies={movieTerpopuler} />
+        </section>
+        <section>
+          <Header title="Aksi" url="/" />
+          <CardList movies={movieAksi} />
+        </section>
+        <section>
+          <Header title="Happy Animation" url="/" />
+          <CardList movies={movieKids} />
+        </section>
+      </Suspense>
     </main>
   );
 }
