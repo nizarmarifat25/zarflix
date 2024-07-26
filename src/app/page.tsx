@@ -20,6 +20,7 @@ export default async function Home() {
       params: {
         api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
         with_genres: 28,
+        page: 2,
       },
     }
   );
@@ -29,6 +30,7 @@ export default async function Home() {
       params: {
         api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
         with_genres: 16,
+        page: 2,
       },
     }
   );

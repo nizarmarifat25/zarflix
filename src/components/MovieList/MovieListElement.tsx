@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Image from "next/image";
 
 export const CardContainer = styled.div`
   display: flex;
@@ -11,6 +12,19 @@ export const HeaderList = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 10px 30px;
+
+  h1 {::before {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: red;
+    }
+  }
 `;
 
 export const GridContainer = styled.div`
@@ -45,12 +59,34 @@ export const GridContainer = styled.div`
 `;
 
 export const Card = styled.div`
+  position: relative;
+  overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  border-radius: 10px;
+  background-color: #fff; /* Background color of the card */
+
+  /* Pseudo-element for darkening effect */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1; /* Ensure the overlay is above the background */
+  }
 
   &:hover {
-    transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(128, 128, 128, 0.5); /* Gray shadow */
+
+    /* Apply darkening effect */
+    &::before {
+      opacity: 1;
+    }
   }
 `;
 
@@ -58,19 +94,39 @@ export const CardImage = styled.div`
   position: relative;
   width: 100%;
   height: 200px;
-  overflow: hidden;
+  border-radius: 10px;
+  overflow: hidden; /* Ensure the image does not overflow the container */
 
   @media (max-width: 768px) {
     height: 150px; /* Adjust height for smaller screens */
   }
 `;
 
-export const CardTitle = styled.div`
-  padding: 0 10px 10px 10px;
-  font-size: 13px;
+export const StyledImage = styled(Image)`
+  height: 100%;
+  width: 100%;
+  object-fit: cover; /* Ensures the image covers the container */
+  transition: transform 0.5s ease;
+  z-index: 0; /* Ensure the image is below the overlay and title */
 
-  @media (max-width: 768px) {
-    font-size: 12px;
-    padding: 10px; /* Adjust padding for smaller screens */
+  ${Card}:hover & {
+    transform: scale(1.1); /* Adjust scale value as needed */
+  }
+`;
+
+export const CardTitle = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  color: white;
+  text-align: center;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: 2; /* Ensure the title is above the overlay and image */
+
+  ${Card}:hover & {
+    transform: translateY(0);
   }
 `;

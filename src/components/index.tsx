@@ -6,7 +6,6 @@ export const Container = styled.div`
 
 export const Button = styled.button`
   z-index: 99;
-  width: 50%;
   padding: 10px 20px;
   color: #fff;
   background-color: #d90429;

@@ -1,15 +1,14 @@
 import styled from "styled-components";
-
-interface BackgroundProps {
-  backgroundImage: string;
+interface ImageBannerProps {
+  $backgroundImage: string;
 }
 
-export const ImageBanner = styled.div<BackgroundProps>`
+export const ImageBanner = styled.div<ImageBannerProps>`
   position: relative;
   overflow: hidden;
   background-position: center;
-  background-image: url(${(props) => props.backgroundImage});
-  background-size: cover; /* Ensures the background image covers the element */
+  background-image: url(${(props) => props.$backgroundImage});
+  background-size: cover;
   height: 75vh;
   box-shadow: 15px 0px 20px rgba(0, 0, 0, 0.5), 
               -15px 0px 20px rgba(0, 0, 0, 0.3);

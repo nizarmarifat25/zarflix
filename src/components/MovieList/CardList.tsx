@@ -1,11 +1,16 @@
 "use client";
 
-import { Card, CardImage, CardTitle, GridContainer } from "./MovieListElement";
-import Image from "next/image";
+import {
+  Card,
+  CardImage,
+  CardTitle,
+  StyledImage,
+} from "./MovieListElement";
 import { CardListProps } from "../../../types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import { Container } from "..";
+import {  Container } from "..";
+import Link from "next/link";
 
 const CardList = ({ movies }: CardListProps) => {
   return (
@@ -27,21 +32,22 @@ const CardList = ({ movies }: CardListProps) => {
       >
         {movies.map((movie) => (
           <SwiperSlide key={movie.id}>
-            <Card>
-              <CardImage>
-                <Image
-                  src={process.env.NEXT_PUBLIC_IMG_URL + movie.backdrop_path}
-                  alt={movie.original_title}
-                  fill
-                  style={{ objectFit: "contain" }}
-                  priority
-                />
-              </CardImage>
-              <CardTitle>
-                <h3>{movie.original_title}</h3>
-                <small>{movie.release_date.split("-")[0]}</small>
-              </CardTitle>
-            </Card>
+            <Link href={`/id/${movie.id}`}>
+              <Card>
+                <CardImage>
+                  <StyledImage
+                    src={process.env.NEXT_PUBLIC_IMG_URL + movie.backdrop_path}
+                    alt={movie.original_title}
+                    fill
+                    priority
+                  />
+                </CardImage>
+                <CardTitle>
+                  <h4>{movie.original_title}</h4>
+                  <small>{movie.release_date.split("-")[0]}</small> <br />
+                </CardTitle>
+              </Card>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
