@@ -18,7 +18,7 @@ const CardList = ({ movies }: CardListProps) => {
         navigation={true}
         breakpoints={{
           320: {
-            slidesPerView: 4,
+            slidesPerView: 3,
           },
           768: {
             slidesPerView: 7,
