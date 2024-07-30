@@ -7,7 +7,7 @@ import Loading from "./loading";
 
 export default async function Home() {
   const terpopuler = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/discover/movie`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/movie/popular`,
     {
       params: {
         api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
@@ -15,22 +15,18 @@ export default async function Home() {
     }
   );
   const aksi = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/discover/movie`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/movie/top_rated`,
     {
       params: {
         api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
-        with_genres: 28,
-        page: 2,
       },
     }
   );
   const kids = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/discover/movie`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/movie/upcoming`,
     {
       params: {
         api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
-        with_genres: 16,
-        page: 2,
       },
     }
   );

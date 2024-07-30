@@ -1,15 +1,10 @@
 "use client";
 
-import {
-  Card,
-  CardImage,
-  CardTitle,
-  StyledImage,
-} from "./MovieListElement";
+import { Card, CardImage, CardTitle, StyledImage } from "./MovieListElement";
 import { CardListProps } from "../../../types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import {  Container } from "..";
+import { Button, Container } from "..";
 import Link from "next/link";
 
 const CardList = ({ movies }: CardListProps) => {
@@ -23,10 +18,10 @@ const CardList = ({ movies }: CardListProps) => {
         navigation={true}
         breakpoints={{
           320: {
-            slidesPerView: 2,
+            slidesPerView: 4,
           },
           768: {
-            slidesPerView: 5,
+            slidesPerView: 7,
           },
         }}
       >
@@ -36,15 +31,13 @@ const CardList = ({ movies }: CardListProps) => {
               <Card>
                 <CardImage>
                   <StyledImage
-                    src={process.env.NEXT_PUBLIC_IMG_URL + movie.backdrop_path}
+                    src={process.env.NEXT_PUBLIC_IMG_URL + movie.poster_path}
                     alt={movie.original_title}
                     fill
                     priority
                   />
                 </CardImage>
                 <CardTitle>
-                  <h4>{movie.original_title}</h4>
-                  <small>{movie.release_date.split("-")[0]}</small> <br />
                 </CardTitle>
               </Card>
             </Link>

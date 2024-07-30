@@ -1,29 +1,61 @@
-"use client";
+  "use client";
 
-import { useRouter } from "next/router";
-import { Container } from "@/components";
-import MovieDetail from "@/components/MovieDetail/MovieDetail";
-import axios from "axios";
-const page = async ({ params }: any) => {
-  const { id } = params;
-  const terpopuler = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/discover/movie`,
-    {
-      params: {
-        api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
-        id: id
-      },
-    }
-  );
+  import { Container } from "@/components";
+  import MovieDetail from "@/components/MovieDetail/MovieDetail";
+  import axios from "axios";
+  import { useEffect, useState } from "react";
+  import { MovieDetailProps, MovieImagesResponse } from "../../../../types";
+  const page = ({ params }: any) => {
+    const { id } = params;
+    const [movie, setMovie] = useState<MovieDetailProps | null>(null);
+    const [gallery, setGallery] = useState<MovieImagesResponse | null>(null);
 
-  console.log(terpopuler, 'terpopuler');
-  
+    const getDetail = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/movie/${id}`,
+          {
+            params: {
+              api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
+            },
+          }
+        );
+        setMovie(response.data);
+        
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  return (
-    <Container>
-      <MovieDetail />
-    </Container>
-  );
-};
+    const getGallery = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/movie/${id}/images`,
+          {
+            params: {
+              api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
+            },
+          }
+        );
+        setGallery(response.data);
+        
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-export default page;
+    useEffect(() => {
+      if(id){
+        getDetail();
+        getGallery();
+      }
+    }, []);
+
+    return (
+      <Container>
+        <MovieDetail detail={movie} gallery={gallery}/>
+      </Container>
+    );
+  };
+
+  export default page;

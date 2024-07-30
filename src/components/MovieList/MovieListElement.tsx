@@ -13,7 +13,9 @@ export const HeaderList = styled.div`
   align-items: center;
   margin: 10px 30px;
 
-  h1 {::before {
+  h1 {
+    position: relative;
+    ::before {
       content: "";
       position: absolute;
       width: 20px;
@@ -51,10 +53,7 @@ export const GridContainer = styled.div`
   }
 
   @media (min-width: 1536px) {
-    grid-template-columns: repeat(
-      5,
-      1fr
-    ); /* Add more columns for very large screens */
+    grid-template-columns: repeat(5, 1fr); /* Add more columns for very large screens */
   }
 `;
 
@@ -64,7 +63,7 @@ export const Card = styled.div`
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   border-radius: 10px;
-  background-color: #fff; /* Background color of the card */
+  aspect-ratio: 2 / 3; /* Aspect ratio for portrait layout */
 
   /* Pseudo-element for darkening effect */
   &::before {
@@ -93,13 +92,9 @@ export const Card = styled.div`
 export const CardImage = styled.div`
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 100%;
   border-radius: 10px;
   overflow: hidden; /* Ensure the image does not overflow the container */
-
-  @media (max-width: 768px) {
-    height: 150px; /* Adjust height for smaller screens */
-  }
 `;
 
 export const StyledImage = styled(Image)`
