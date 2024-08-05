@@ -11,7 +11,7 @@ export const HeaderList = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 30px;
+  margin: 20px 30px;
 
   h1 {
     position: relative;

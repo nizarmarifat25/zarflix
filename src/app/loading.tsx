@@ -1,9 +1,18 @@
-import React from 'react'
+import React from "react";
 
-const loading = () => {
+const Loading = () => {
   return (
-    <div>loading....</div>
-  )
-}
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <div className="loader"></div>
+    </div>
+  );
+};
 
-export default loading
+export default Loading;

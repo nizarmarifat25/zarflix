@@ -5,6 +5,7 @@ import MovieDetail from "@/components/MovieDetail/MovieDetail";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MovieDetailProps, MovieImagesResponse } from "../../../../types";
+import Navbar from "@/components/Navbar/Navbar";
 
 const Page = ({ params }: any) => {
   const { id } = params;
@@ -54,6 +55,7 @@ const Page = ({ params }: any) => {
 
   return (
     <div>
+      <Navbar />
       <MovieDetail detail={movie} gallery={gallery} />
     </div>
   );

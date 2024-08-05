@@ -4,7 +4,7 @@ import { Card, CardImage, CardTitle, StyledImage } from "./MovieListElement";
 import { CardListProps } from "../../../types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import { Button, Container } from "..";
+import { Container } from "..";
 import Link from "next/link";
 
 const CardList = ({ movies }: CardListProps) => {
@@ -37,8 +37,7 @@ const CardList = ({ movies }: CardListProps) => {
                     priority
                   />
                 </CardImage>
-                <CardTitle>
-                </CardTitle>
+                <CardTitle></CardTitle>
               </Card>
             </Link>
           </SwiperSlide>

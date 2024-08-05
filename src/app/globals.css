@@ -107,7 +107,15 @@ a {
   padding: 20px;
   background-color: rgba(41, 41, 41, 0.51); 
   border-radius: 50%;
+  transition: all 0.3s ease;
 }
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: #ffff; 
+  background-color: rgb(41, 41, 41); 
+}
+
 
 .swiper-button-next::after,
 .swiper-button-prev::after {

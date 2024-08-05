@@ -8,7 +8,7 @@ const Header = ({title, url} : HeaderListProps) => {
   return (
     <HeaderList>
         <h1>{title}</h1>
-        <Link href={url}>Lihat Selengkapnya</Link>
+        <Link href={url}>More</Link>
     </HeaderList>
   )
 }

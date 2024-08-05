@@ -44,11 +44,11 @@ export default async function Home() {
           <Banner movies={movieAksi} />
         </section>
         <section>
-          <Header title="Terpopuler" url="/" />
+          <Header title="Most Popular" url="/" />
           <CardList movies={movieTerpopuler} />
         </section>
         <section>
-          <Header title="Aksi" url="/" />
+          <Header title="Action" url="/" />
           <CardList movies={movieAksi} />
         </section>
         <section>

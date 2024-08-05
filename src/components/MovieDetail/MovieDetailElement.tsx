@@ -1,28 +1,71 @@
 import styled from "styled-components";
 
+interface ImageBannerProps {
+  $backgroundImage: string;
+}
+
+export const BackgroundDetail = styled.div<ImageBannerProps>`
+  position: relative;
+  overflow: hidden;
+  background-position: center;
+  background-image: url(${(props) => props.$backgroundImage});
+  background-size: cover;
+  height: 50vh;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      0deg,
+      rgba(1, 1, 3, 1) 4%,
+      rgba(255, 255, 255, 0) 25%
+    );
+  }
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+  }
+`;
+
 // Wrapper for the entire movie detail section
 export const MovieDetailWrapper = styled.div`
   padding: 20px;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: -200px auto auto auto; /* Retain margin as desired */
+  overflow: hidden; /* Prevent content overflow */
   display: flex;
   flex-direction: column;
   gap: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
-// Styling for the movie poster
-export const MoviePoster = styled.div`
+// Styling for the movie poster and additional info
+export const MoviePosterAndInfo = styled.div`
+  margin: 0 auto;
+  padding: 20px;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 20px;
-  margin-bottom: 20px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 
   img {
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 500px;
+    max-width: 300px; /* Adjusted width to fit in the row layout */
     height: auto;
     object-fit: cover;
   }

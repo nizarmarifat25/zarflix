@@ -1,28 +1,29 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import Image from "next/image";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import Link from "next/link";
 
-const NavbarContainer = styled.nav<{ isFixed: boolean; isTransparent: boolean }>`
-  background-color: ${({ isTransparent }) => (isTransparent ? 'rgba(51, 51, 51, 0.1)' : 'rgba(51, 51, 51, 0.5)')}; /* Adjust transparency based on scroll position */
+const NavbarContainer = styled.nav<{
+  isFixed: boolean;
+  isTransparent: boolean;
+}>`
+  background-color: ${({ isTransparent }) =>
+    isTransparent ? "rgba(51, 51, 51, 0)" : "rgba(51, 51, 51, 0.5)"};
   padding: 1rem 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: red; /* Red font color */
-  transition: all 0.3s ease; /* Smooth transition for fixed position and padding */
+  color: red;
+  transition: all 0.3s ease;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
-  backdrop-filter: ${({ isFixed }) => (isFixed ? 'blur(8px)' : 'none')}; /* Apply blur effect when fixed */
-  box-shadow: ${({ isFixed }) => (isFixed ? '0 2px 5px rgba(0, 0, 0, 0.3)' : 'none')}; /* Add shadow when fixed */
-`;
-
-const Logo = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: red; /* Red font color */
+  backdrop-filter: ${({ isFixed }) => (isFixed ? "blur(8px)" : "none")};
+  box-shadow: ${({ isFixed }) =>
+    isFixed ? "0 2px 5px rgba(0, 0, 0, 0.3)" : "none"};
 `;
 
 interface MenuProps {
@@ -33,31 +34,31 @@ const Menu = styled.ul<MenuProps>`
   list-style: none;
   display: flex;
   gap: 1rem;
-  transition: max-height 0.3s ease, opacity 0.3s ease; /* Smooth transition for menu */
-  max-height: ${({ isOpen }) => (isOpen ? '300px' : 'auto')}; /* Adjust max-height */
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  max-height: ${({ isOpen }) => (isOpen ? "300px" : "auto")};
   overflow: hidden;
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 1)}; /* Ensure menu items are visible */
-  
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 1)};
+
   @media (max-width: 768px) {
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
     flex-direction: column;
-    background-color: rgba(51, 51, 51, 0.9); /* Slightly darker background */
+    background-color: rgba(51, 51, 51, 0.9);
     padding: 1rem 0;
-    max-height: ${({ isOpen }) => (isOpen ? '300px' : '0')}; /* Adjust max-height */
-    opacity: ${({ isOpen }) => (isOpen ? 1 : 0)}; /* Fade in/out effect */
+    max-height: ${({ isOpen }) => (isOpen ? "300px" : "0")};
+    opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   }
 `;
 
 const MenuItem = styled.li`
-  color: white; /* White font color for better contrast */
+  color: white;
   cursor: pointer;
-  transition: color 0.3s ease; /* Smooth transition for hover effect */
-  padding: 0.5rem 1rem; /* Padding for better spacing */
+  transition: color 0.3s ease;
+  padding: 0.5rem 1rem;
   &:hover {
-    color: #ff4d4d; /* Slightly different red for hover effect */
+    color: #ff4d4d;
   }
 `;
 
@@ -68,10 +69,10 @@ const Hamburger = styled.div`
   span {
     height: 2px;
     width: 25px;
-    background: red; /* Red color for hamburger icon */
+    background: red;
     margin-bottom: 4px;
     border-radius: 5px;
-    transition: all 0.3s ease; /* Smooth transition for hamburger lines */
+    transition: all 0.3s ease;
   }
 
   @media (max-width: 768px) {
@@ -87,23 +88,32 @@ const Navbar: React.FC = () => {
   const handleScroll = () => {
     if (window.scrollY >= 80) {
       setIsFixed(true);
-      setIsTransparent(false); // Background becomes less transparent
+      setIsTransparent(false);
     } else {
       setIsFixed(false);
-      setIsTransparent(true); // Background remains more transparent
+      setIsTransparent(true);
     }
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
+
   return (
     <NavbarContainer isFixed={isFixed} isTransparent={isTransparent}>
-      <Logo>Zarflix</Logo>
+      <Link href="/" passHref>
+        <Image
+          src="/images/logo.png"
+          alt="logo"
+          layout="intrinsic"
+          width={200}
+          height={200}
+        />
+      </Link>
       <Hamburger onClick={() => setIsOpen(!isOpen)}>
         <span></span>
         <span></span>
@@ -116,6 +126,6 @@ const Navbar: React.FC = () => {
       </Menu>
     </NavbarContainer>
   );
-}
+};
 
 export default Navbar;
