@@ -80,7 +80,6 @@ export const Card = styled.div`
   }
 
   &:hover {
-    box-shadow: 0 10px 20px rgba(128, 128, 128, 0.5); /* Gray shadow */
 
     /* Apply darkening effect */
     &::before {

@@ -50,12 +50,12 @@ const Page = ({ params }: any) => {
       getDetail();
       getGallery();
     }
-  }, [id]); // Add id as a dependency to ensure effect runs when id changes
+  }, [id]);
 
   return (
-    <Container>
+    <div>
       <MovieDetail detail={movie} gallery={gallery} />
-    </Container>
+    </div>
   );
 };
 
