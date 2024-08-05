@@ -9,7 +9,7 @@ export const ImageBanner = styled.div<ImageBannerProps>`
   background-position: center;
   background-image: url(${(props) => props.$backgroundImage});
   background-size: cover;
-  height: 75vh;
+  height: 85vh;
   box-shadow: 15px 0px 20px rgba(0, 0, 0, 0.5), 
               -15px 0px 20px rgba(0, 0, 0, 0.3);
 

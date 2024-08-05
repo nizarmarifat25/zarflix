@@ -4,6 +4,7 @@ import Header from "@/components/MovieList/Header";
 import axios from "axios";
 import { Suspense } from "react";
 import Loading from "./loading";
+import Navbar from "@/components/Navbar/Navbar";
 
 export default async function Home() {
   const terpopuler = await axios.get(
@@ -38,6 +39,7 @@ export default async function Home() {
   return (
     <main>
       <Suspense fallback={<Loading />}>
+        <Navbar />
         <section>
           <Banner movies={movieAksi} />
         </section>
