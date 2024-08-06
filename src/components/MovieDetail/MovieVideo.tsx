@@ -25,7 +25,6 @@ const VideoContainer = styled.div`
 
 const VideoTitle = styled.h2`
   font-size: 2rem;
-  margin-bottom: 20px;
   color: white;
   text-align: center;
 `;

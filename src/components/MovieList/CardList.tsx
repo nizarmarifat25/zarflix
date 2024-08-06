@@ -37,7 +37,6 @@ const CardList = ({ movies }: CardListProps) => {
                     priority
                   />
                 </CardImage>
-                <CardTitle></CardTitle>
               </Card>
             </Link>
           </SwiperSlide>

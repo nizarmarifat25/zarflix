@@ -4,6 +4,10 @@ interface ImageBannerProps {
   $backgroundImage: string;
 }
 
+interface BadgeIconProps {
+  color: string; /* Menambahkan prop untuk menentukan warna */
+}
+
 export const BackgroundDetail = styled.div<ImageBannerProps>`
   position: relative;
   overflow: hidden;
@@ -108,7 +112,16 @@ export const MovieDetails = styled.div`
 // List of genres
 export const GenreList = styled.p`
   font-size: 1rem;
-  margin: 0;
+`;
+
+export const GenreBadge = styled.span`
+  border: 2px solid white;
+  color: white;
+  border-radius: 12px;
+  padding: 5px 10px;
+  font-size: 0.9em;
+  display: inline-block;
+  margin-right: 10px;
 `;
 
 // List of production companies
@@ -147,5 +160,51 @@ export const Gallery = styled.div`
       transform: scale(1.05);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     }
+  }
+`;
+
+export const CastTitle = styled.h2`
+  font-size: 2rem;
+  color: white;
+  text-align: center;
+`;
+
+export const CastList = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+`;
+
+export const CastItem = styled.div`
+  width: 150px;
+  margin: 10px;
+  img {
+    width: 100%;
+    height: auto;
+  }
+  p {
+    text-align: center;
+    margin: 5px 0;
+  }
+`;
+
+export const IconWrapper = styled.div`
+  display: flex;
+  align-items: center; /* Memastikan ikon dan teks berada di tengah secara vertikal */
+`;
+
+
+export const BadgeIcon = styled.div<BadgeIconProps>`
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  background: ${({ color }) => color}; /* Menggunakan prop warna */
+  border-radius: 12px;
+  color: #fff;
+  margin-right: 10px;
+  font-size: 14px; /* Ukuran font */
+  svg {
+    margin-right: 5px; /* Jarak antara ikon dan teks */
   }
 `;

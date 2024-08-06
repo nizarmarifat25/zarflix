@@ -10,10 +10,10 @@ export const Button = styled.button`
   color: #fff;
   background-color: #d90429;
   border: none;
-  border-radius: 4px;
+  border-radius: 15px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   margin: 20px 0;
 
   &:hover {
@@ -45,4 +45,3 @@ export const CustomLoader = styled.div`
     }
   }
 `;
-

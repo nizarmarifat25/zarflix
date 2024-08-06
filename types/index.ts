@@ -101,3 +101,10 @@ export interface Video {
 export interface MovieVideosProps {
   movieId: number;
 }
+
+export interface CastMember {
+  cast_id: number;
+  character: string;
+  name: string;
+  profile_path: string;
+}

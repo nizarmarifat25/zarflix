@@ -1,6 +1,5 @@
 "use client";
 
-import { Container } from "@/components";
 import MovieDetail from "@/components/MovieDetail/MovieDetail";
 import axios from "axios";
 import { useEffect, useState } from "react";

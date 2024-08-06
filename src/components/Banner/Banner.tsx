@@ -30,7 +30,7 @@ const Banner = ({ movies }: BannerProps) => {
                 <h1>{movie.title}</h1>
                 <p>{movie.overview}</p>
                 <Link href={`/id/${movie.id}`} style={{zIndex:'1000'}}>
-                  <Button>Tonton Sekarang!</Button>
+                  <Button>Watch Now</Button>
                 </Link>
               </div>
             </ImageBanner>

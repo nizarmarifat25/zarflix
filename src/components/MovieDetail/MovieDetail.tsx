@@ -1,16 +1,23 @@
-import React from "react";
-import { MovieDetailProps, MovieImagesResponse } from "../../../types";
+import React, { useEffect, useState } from 'react';
+import { FaStar } from 'react-icons/fa';
+import { GiSandsOfTime } from 'react-icons/gi';
+import { MovieDetailProps, MovieImagesResponse, Movie } from '../../../types';
 import {
   MovieDetailWrapper,
   MoviePosterAndInfo,
   MovieDetails,
   GenreList,
-  CompanyList,
+  GenreBadge,
   AdditionalInfo,
-  Gallery,
   BackgroundDetail,
-} from "./MovieDetailElement";
-import MovieVideos from "./MovieVideo";
+  IconWrapper,
+  BadgeIcon,
+} from './MovieDetailElement';
+import MovieVideos from './MovieVideo';
+import MovieCastList from './MovieCastList';
+import CardList from '../MovieList/CardList';
+import axios from 'axios';
+import Header from '../MovieList/Header';
 
 interface MovieDetailComponentProps {
   detail: MovieDetailProps | null;
@@ -18,17 +25,42 @@ interface MovieDetailComponentProps {
 }
 
 const MovieDetail = ({ detail, gallery }: MovieDetailComponentProps) => {
+  const [relevantMovies, setRelevantMovies] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (detail) {
+      axios
+        .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/discover/movie`, {
+          params: {
+            api_key: process.env.NEXT_PUBLIC_TMDB_KEY,
+            with_genres: detail.genres[0].id,
+          },
+        })
+        .then((response) => {
+          setRelevantMovies(response.data.results);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setError(error.message);
+          setLoading(false);
+        });
+    }
+  }, [detail]);
+
   if (!detail) {
     return null;
   }
 
-  const displayedImages = gallery?.backdrops.slice(0, 14) || [];
+  const runtimeInHours = Math.floor(detail.runtime / 60);
+  const runtimeInMinutes = detail.runtime % 60;
 
   return (
     <>
-      <BackgroundDetail 
-      $backgroundImage={`${process.env.NEXT_PUBLIC_IMG_URL}${detail.backdrop_path}`}
-      ></BackgroundDetail>
+      <BackgroundDetail
+        $backgroundImage={`${process.env.NEXT_PUBLIC_IMG_URL}${detail.backdrop_path}`}
+      />
       <MovieDetailWrapper>
         <MoviePosterAndInfo>
           <img
@@ -38,50 +70,49 @@ const MovieDetail = ({ detail, gallery }: MovieDetailComponentProps) => {
           <AdditionalInfo>
             <MovieDetails>
               <h1>{detail.title}</h1>
+              <GenreList>
+                {detail.genres.map((genre) => (
+                  <GenreBadge key={genre.id}>{genre.name}</GenreBadge>
+                ))}
+              </GenreList>
+              <IconWrapper>
+                <BadgeIcon color="#3498db">
+                  <GiSandsOfTime size={20} />
+                  {runtimeInHours}h {runtimeInMinutes}m
+                </BadgeIcon>
+                <BadgeIcon color="#f39c12">
+                  <FaStar size={20} />
+                  {detail.vote_average}
+                </BadgeIcon>
+              </IconWrapper>
               <p>{detail.tagline}</p>
               <p>{detail.overview}</p>
             </MovieDetails>
-            <p>
-              <strong>Release Date:</strong> {detail.release_date}
-            </p>
-            <p>
-              <strong>Runtime:</strong> {detail.runtime} minutes
-            </p>
-            <GenreList>
-              <strong>Genres:</strong>{" "}
-              {detail.genres.map((genre) => genre.name).join(", ")}
-            </GenreList>
-            <CompanyList>
-              <strong>Production Companies:</strong>{" "}
-              {detail.production_companies
-                .map((company) => company.name)
-                .join(", ")}
-            </CompanyList>
-            <p>
-              <strong>Revenue:</strong> ${detail.revenue.toLocaleString()}
-            </p>
-            <p>
-              <strong>Vote Average:</strong> {detail.vote_average}
-            </p>
-            <p>
-              <strong>Vote Count:</strong> {detail.vote_count}
-            </p>
-            <a href={detail.homepage} target="_blank" rel="noopener noreferrer">
-              Official Website
-            </a>
+            {detail.homepage && (
+              <a
+                href={detail.homepage}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Official Website
+              </a>
+            )}
           </AdditionalInfo>
         </MoviePosterAndInfo>
-        <Gallery>
-          {displayedImages.map((image) => (
-            <img
-              key={image.file_path}
-              src={`${process.env.NEXT_PUBLIC_IMG_URL}/${image.file_path}`}
-              alt="Movie backdrop"
-            />
-          ))}
-        </Gallery>
+        <MovieCastList movieId={detail.id} />
         <MovieVideos movieId={detail.id} />
+        
       </MovieDetailWrapper>
+      {loading ? (
+          null
+        ) : error ? (
+          <p>Error: {error}</p>
+        ) : (
+          <>
+          <Header title="Relevant Movies" url="/" />
+          <CardList movies={relevantMovies} />
+          </>
+        )}
     </>
   );
 };
